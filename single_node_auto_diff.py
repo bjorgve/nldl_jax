@@ -30,16 +30,17 @@ gradient = grad_square_vectorized(x)
 print("\n" * 3)
 print(f'Gradient of square at points {x.tolist()}: {gradient.tolist()} (Element-wise gradient of x^2)')
 
-# PARALLELIZATION ACROSS MULTIPLE DEVICES:
-# Determine the number of available local devices.
+
+print("\n")
+print(f"Total number of devices: {jax.device_count()}")
+print(f"Local/Devices per task: {jax.local_device_count()}\n")
+
 n_devices = jax.local_device_count()
-# Create an array suitable for distribution across devices: a larger range that can be reshaped.
-xs = jnp.arange(5 * n_devices, dtype=jnp.float32).reshape(-1, 5)
-print("\n" * 3)
+xs = jnp.arange(10 * n_devices, dtype=jnp.float32).reshape(-1, 10)
 print(f'Data prepared for distribution across {n_devices} devices:\n{xs}')
-# Parallelize the computation across multiple devices using `jax.pmap`.
+
 distributed_grad_square_vectorized = jax.pmap(grad_square_vectorized, axis_name='p')
-# The output illustrates parallel computation.
+
 distributed_gradients = distributed_grad_square_vectorized(xs)
-print("\n" * 3)
-print(f'Distributed gradients:\n{distributed_gradients} (Computed in parallel across devices)')
+print("\n")
+print(f'Distributed gradients:\n{distributed_gradients}')

@@ -3,7 +3,7 @@
 #SBATCH --account=project_465000096
 #SBATCH --time=00:04:00
 #SBATCH --partition=standard-g
-#SBATCH --nodes=4
+#SBATCH --nodes= # Fill me inn 
 #SBATCH --ntasks-per-node=8
 #SBATCH --gpus-per-node=8
 #SBATCH -o distributed_auto_diff.out
